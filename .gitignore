@@ -1,4 +1,6 @@
-/.gradle/
+# DONT FORGET ON PUBLIC REPOSITORIES!
+#/.gradle/ 
+
 /build/
 /run/
 /run_server/*

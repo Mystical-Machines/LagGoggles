@@ -20,6 +20,9 @@ import java.util.Optional;
 @Config(modid = Main.MODID_LOWER, name = Main.MODID + "-server")
 public class ServerConfig {
 
+    @Config.Comment("What's the LP permission node for staff to teleport using LagGoggles?")
+    public static String TELEPORT_PERMISSION = "lg.teleport";
+
     @Config.Comment("What's the permission level available to non-operators (Normal players)?\n" +
                     "Please note that this ONLY works on dedicated servers. If you're playing singleplayer or LAN, the FULL permission is used.\n" +
                     "Available permissions in ascending order are:\n" +

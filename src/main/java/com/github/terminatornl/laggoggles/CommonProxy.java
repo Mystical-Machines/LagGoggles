@@ -11,6 +11,9 @@ import com.github.terminatornl.laggoggles.profiler.TickCounter;
 import com.github.terminatornl.laggoggles.server.*;
 import com.github.terminatornl.laggoggles.util.Perms;
 import com.github.terminatornl.laggoggles.util.RunInServerThread;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.node.types.PermissionNode;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -31,7 +34,8 @@ public class CommonProxy {
     private byte PACKET_ID = 0;
 
     public void preinit(FMLPreInitializationEvent e){
-
+        LuckPermsProvider.get();
+        PermissionNode.builder(ServerConfig.TELEPORT_PERMISSION).build();
     }
 
     public void init(FMLInitializationEvent e){}

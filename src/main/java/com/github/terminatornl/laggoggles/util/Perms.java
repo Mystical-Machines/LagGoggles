@@ -4,6 +4,10 @@ import com.github.terminatornl.laggoggles.packet.ObjectData;
 import com.github.terminatornl.laggoggles.profiler.ProfileResult;
 import com.github.terminatornl.laggoggles.server.RequestDataHandler;
 import com.github.terminatornl.laggoggles.server.ServerConfig;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.cacheddata.CachedPermissionData;
+import net.luckperms.api.util.Tristate;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,10 +19,15 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import java.util.ArrayList;
 import java.util.UUID;
 
+
 public class Perms {
+
+    static LuckPerms api = LuckPermsProvider.get();
 
     public static final double MAX_RANGE_FOR_PLAYERS_HORIZONTAL_SQ = ServerConfig.NON_OPS_MAX_HORIZONTAL_RANGE * ServerConfig.NON_OPS_MAX_HORIZONTAL_RANGE;
     public static final double MAX_RANGE_FOR_PLAYERS_VERTICAL_SQ = ServerConfig.NON_OPS_MAX_VERTICAL_RANGE * ServerConfig.NON_OPS_MAX_HORIZONTAL_RANGE;
+
+    public static final String TELEPORT_PERMISSION = ServerConfig.TELEPORT_PERMISSION;
 
     public enum Permission{
         NONE,
@@ -27,8 +36,15 @@ public class Perms {
         FULL
     }
 
+    public static boolean getUserPerms(UUID uniqueId) {
+        CachedPermissionData permissionData = api.getUserManager().getUser(uniqueId).getCachedData().getPermissionData();
+        Tristate checkResult = permissionData.checkPermission(TELEPORT_PERMISSION);
+
+        return checkResult.asBoolean();
+    }
+
     public static Permission getPermission(EntityPlayer p){
-        if(FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayers().getPermissionLevel(p.getGameProfile()) > 0 || FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer() == false) {
+        if(getUserPerms(p.getUniqueID()) || FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer() == false || FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getOppedPlayers().getPermissionLevel(p.getGameProfile()) > 0) {
             return Permission.FULL;
         }else{
             return ServerConfig.NON_OP_PERMISSION_LEVEL;

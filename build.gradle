@@ -5,13 +5,16 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        mavenCentral()
+
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
+
     }
 }
-String LagGogglesVersion = "1.12.2-5.8"
+String LagGogglesVersion = "1.12.2-5.8-LP"
 
 boolean installIntoServer = hasProperty("isServer")
 
@@ -77,10 +80,14 @@ configurations {
 
 repositories {
     mavenLocal() // developers can run the publishToMavenLocal task on TickCentral to use it here
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
-    compile "com.github.terminatornl.tickcentral:TickCentral:2.6-testing-dev" // resolved in mavenLocal, run publishToMavenLocal on TickCentral
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 processResources {
