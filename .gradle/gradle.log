@@ -1,3 +1,0 @@
-This mapping 'snapshot_20180808' was designed for MC 1.12! Use at your own peril.
-The Task.leftShift(Closure) method has been deprecated and is scheduled to be removed in Gradle 5.0. Please use Task.doLast(Action) instead.
-	at build_a6tkdnvsvqjyq7onu66uphwge.run(C:\Users\Matthijs\IdeaProjects\LagGoggles\build.gradle:111)

@@ -1,7 +1,6 @@
 # DONT FORGET ON PUBLIC REPOSITORIES!
-#/.gradle/ 
-
-/build/
+.gradle
+/build
 /run/
 /run_server/*
 !/run_server/server.properties
